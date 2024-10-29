@@ -1,0 +1,162 @@
+/* General container styling */
+.book-list-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+/* Table Styling */
+.book-list-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.book-list-table th,
+.book-list-table td {
+  padding: 10px;
+  text-align: center;
+  border: none; /* Removed the border */
+}
+
+.book-list-table th {
+  background-color: #f4f4f4;
+}
+
+.book-list-table td {
+  vertical-align: middle;
+}
+
+/* Book cover image styling */
+.book-cover {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* Action buttons */
+.edit-button,
+.delete-button {
+  padding: 5px 10px;
+  margin: 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.delete-button {
+  background-color: #dc3545;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  opacity: 0.8;
+}
+
+/* Modal styling (if needed) */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .book-cover {
+    width: 80px;
+    height: 120px;
+  }
+
+  .edit-button,
+  .delete-button {
+    padding: 5px;
+  }
+
+  .book-list-table th,
+  .book-list-table td {
+    font-size: 14px;
+  }
+  
+  
+  .modern-search-bar:focus {
+    border-color: #3085d6;
+    box-shadow: 0 0 10px rgba(48, 133, 214, 0.5);
+  }
+  
+}
+.book-list-actions {
+  width: 100%; /* Ensure the container is full width */
+}
+
+.search-container {
+  position: relative; /* Positioning context for the icon */
+  width: 100%; /* Make the search container full width */
+}
+
+.search-bar {
+  width: 100%; /* Make input full width */
+  padding-left: 30px; /* Add padding to avoid overlap with the icon */
+  height: 40px; /* Adjust height as needed */
+  border: 1px solid #ccc; /* Add border styling */
+  border-radius: 4px; /* Rounded corners */
+}
+
+.search-icon {
+  position: absolute; /* Position the icon within the container */
+  left: 10px; /* Adjust left position */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust vertical alignment */
+  color: #888; /* Icon color */
+  font-size: 16px; /* Icon size */
+}
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.book-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.book-card h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
