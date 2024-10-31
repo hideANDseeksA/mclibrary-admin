@@ -75,14 +75,35 @@ const StudentDashboard = () => {
 
   const fetchStudents = async () => {
     try {
+      // Display a loading SweetAlert
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Fetching students data, please wait.',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+  
       const response = await axios.get('https://backend-j2o4.onrender.com/api/students');
       setStudents(response.data);
+  
+      // Close the SweetAlert after data is successfully fetched
+      Swal.close();
     } catch (error) {
       console.error('Error fetching students:', error);
+  
+      // Display an error SweetAlert if fetching fails
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Could not fetch students data. Please try again later.'
+      });
     } finally {
       setLoading(false);
     }
   };
+  
 
   const handleAction = async (email, action, value) => {
     const actionMessage = value ? action : `un${action}`;

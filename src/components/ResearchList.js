@@ -12,10 +12,30 @@ const ResearchList = ({ onBookUpdated }) => {
 
     const fetchBooks = async () => {
         try {
+            // Show loading alert
+            Swal.fire({
+                title: 'Loading...',
+                text: 'Fetching Research data, please wait.',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+    
             const response = await axios.get("https://backend-j2o4.onrender.com/api/research");
             setBooks(response.data);
+    
+            // Close loading alert once data is fetched
+            Swal.close();
         } catch (error) {
-            console.error("Error fetching books:", error);
+            console.error("Error fetching Research:", error);
+    
+            // Show error alert if fetching fails
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'There was an error fetching the Research. Please try again later.',
+            });
         }
     };
 

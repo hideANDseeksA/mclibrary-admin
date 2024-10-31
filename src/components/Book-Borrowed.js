@@ -13,25 +13,67 @@ const BookActivityTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredActivities, setFilteredActivities] = useState([]);
 
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/bookactivities_borrowed');
+        Swal.fire({
+          title: 'Loading...',
+          text: 'Fetching book activity data.',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+  
+        const response = await fetch('https://backend-j2o4.onrender.com/api/bookactivities_borrowed');
         const data = await response.json();
         console.log(data);
+        
         setBookActivities(data);
         setFilteredActivities(data);
+        
+        Swal.close();
       } catch (error) {
+        Swal.close();
         console.error('Error fetching book activity data:', error);
+        
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Could not fetch book activity data. Please try again later.',
+        });
       }
     };
-
+  
     fetchData();
-
+  
     const intervalId = setInterval(() => {
-      fetchData();
-    }, 10000);
-
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Updating book activity data.',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+  
+      const timeoutId = setTimeout(() => {
+        Swal.close();
+        clearInterval(intervalId); // stop the interval
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Data fetching took too long. Please check your connection or try again later.',
+        });
+      }, 120000); // 2 minutes in milliseconds
+  
+      fetchData().then(() => {
+        clearTimeout(timeoutId); // clear timeout if data is fetched successfully
+      });
+    }, 120000); // set interval to 2 minutes
+  
     return () => clearInterval(intervalId);
   }, []);
 
@@ -138,7 +180,7 @@ const BookActivityTable = () => {
       });
 
       try {
-        const response = await fetch(`http://localhost:3000/api/bookactivity/${activityId}`, {
+        const response = await fetch(`https://backend-j2o4.onrender.com/api/bookactivity/${activityId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -151,7 +193,7 @@ const BookActivityTable = () => {
         }
 
         if (actionType === 'Declined') {
-          const deleteResponse = await fetch(`http://localhost:3000/api/bookactivities/${activityId}`, {
+          const deleteResponse = await fetch(`https://backend-j2o4.onrender.com/api/bookactivities/${activityId}`, {
             method: 'DELETE',
           });
 
@@ -166,7 +208,7 @@ const BookActivityTable = () => {
 
         if (actionType === 'Approved') {
           if (activity.action_type === 'Borrowed' || activity.action_type === 'Reserve') {
-            const stockResponse = await fetch(`http://localhost:3000/api/books_decreased/${activity.book_id}`, {
+            const stockResponse = await fetch(`https://backend-j2o4.onrender.com/api/books_decreased/${activity.book_id}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -180,7 +222,7 @@ const BookActivityTable = () => {
         }
 
         // Fetch updated data immediately
-        const updatedResponse = await fetch('http://localhost:3000/api/bookactivities_borrowed');
+        const updatedResponse = await fetch('https://backend-j2o4.onrender.com/api/bookactivities_borrowed');
         const updatedData = await updatedResponse.json();
         setBookActivities(updatedData);
         setFilteredActivities(updatedData);

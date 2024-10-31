@@ -20,11 +20,31 @@ const BookList = ({ onBookUpdated }) => {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
 
   const fetchBooks = async () => {
+    // Show loading alert
+    Swal.fire({
+      title: 'Loading...',
+      text: 'Fetching books, please wait.',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+  
     try {
       const response = await axios.get("https://backend-j2o4.onrender.com/api/books");
       setBooks(response.data);
+  
+      // Close the loading alert on success
+      Swal.close();
     } catch (error) {
       console.error("Error fetching books:", error);
+  
+      // Show error alert
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong while fetching the books!',
+      });
     }
   };
 

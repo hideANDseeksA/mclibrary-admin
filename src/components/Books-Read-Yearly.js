@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto'; 
+import Swal from 'sweetalert2';
+
 
 const BooksReadOverYear = () => {
   const [chartData, setChartData] = useState({ datasets: [] });
@@ -8,14 +10,23 @@ const BooksReadOverYear = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Fetching data, please wait...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+  
       try {
         const response = await fetch('https://backend-j2o4.onrender.com/api/books-read-over-yearly');
         const data = await response.json();
-
+  
         // Prepare the data for the chart
         const labels = data.map(item => item.title);
         const readCounts = data.map(item => item.total_reads);
-
+  
         // Generate unique colors for each bar
         const uniqueColors = labels.map(() => {
           const r = Math.floor(Math.random() * 255);
@@ -23,7 +34,7 @@ const BooksReadOverYear = () => {
           const b = Math.floor(Math.random() * 255);
           return `rgba(${r}, ${g}, ${b}, 0.6)`;
         });
-
+  
         // Set the chart data
         setChartData({
           labels: labels,
@@ -37,15 +48,23 @@ const BooksReadOverYear = () => {
             },
           ],
         });
+  
+        Swal.close(); // Close loading alert
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong while fetching data!',
+        });
         setLoading(false);
       }
     };
-
+  
     fetchData();
   }, []);
+  
 
   return (
     <div>

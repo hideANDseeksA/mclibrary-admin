@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { QRCodeCanvas } from 'qrcode.react';
 import '../Styles/QRCodeGenerator.css';
 import logo from '../logo/gradschool.gif';
+import Swal from 'sweetalert2';
 
 const QRCodeGenerator = () => {
   const [books, setBooks] = useState([]);
@@ -13,12 +14,24 @@ const QRCodeGenerator = () => {
   // Fetch books data from the backend
   useEffect(() => {
     const fetchBooks = async () => {
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Fetching QR CODE data, please wait.',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
       try {
         const response = await fetch('https://backend-j2o4.onrender.com/api/books'); // Replace with your API URL
         const data = await response.json();
         setBooks(data);
       } catch (error) {
         console.error('Error fetching books:', error);
+        Swal.fire('Error', 'Failed to fetch QR CODE data.', 'error');
+      } finally {
+        Swal.close();
       }
     };
 

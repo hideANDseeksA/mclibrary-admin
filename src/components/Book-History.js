@@ -27,22 +27,37 @@ const BookLogs = () => {
   const [bookLogs, setBookLogs] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [loading] = useState(false);
+  const [error] = useState(null);
 
-  // Fetch Book Logs from Backend
+
   useEffect(() => {
     const fetchBookLogs = async () => {
-      setLoading(true);
-      setError(null);
+      // Show loading alert
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Fetching book logs, please wait.',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       try {
         const response = await axios.get('https://backend-j2o4.onrender.com/api/books_history'); // Replace with your API endpoint
         setBookLogs(response.data);
+
+        // Close the loading alert on success
+        Swal.close();
       } catch (err) {
         console.error('Error fetching book logs:', err);
-        setError('Failed to fetch book logs. Please try again later.');
-      } finally {
-        setLoading(false);
+
+        // Show error alert if request fails
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to fetch book logs. Please try again later.',
+        });
       }
     };
 

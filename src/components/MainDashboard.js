@@ -13,7 +13,7 @@ import {
   ListItemIcon,
   ListItemText,
   Button,
-  Collapse, // Import Collapse
+  Collapse, 
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
@@ -27,14 +27,13 @@ import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import FolderIcon from '@mui/icons-material/Folder';
 import CopyIcon from '@mui/icons-material/FileCopy';
 import QRCODE from '@mui/icons-material/QrCode';
-import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import ManageHistoryIcon from '@mui/icons-material/ManageHistory';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
-import ExpandLess from '@mui/icons-material/ExpandLess'; // Import ExpandLess
-import ExpandMore from '@mui/icons-material/ExpandMore'; // Import ExpandMore
+import ExpandLess from '@mui/icons-material/ExpandLess'; 
+import ExpandMore from '@mui/icons-material/ExpandMore'; 
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
@@ -50,10 +49,8 @@ import AddDigital from './AddDigital'
 import DigitalList from './DigitalList';
 import ResearchList from './ResearchList';
 import AddReseach from './AddResearch';
-import StatsDisplay from './Statistics';
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
-import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import ReturnBook from './Book-Returned';
 import BorrowedBook from './Book-Borrowed';
 import ResearchGraph from './ResearchGraph';
@@ -119,7 +116,7 @@ const MainDashboard = () => {
           position="fixed"
           sx={{
             width: open ? `calc(100% - ${drawerWidth}px)` : '100%',
-            marginLeft: open ? `${drawerWidth}px` : 0, // Adjust margin based on drawer state
+            marginLeft: open ? `${drawerWidth}px` : 0, 
             transition: (theme) =>
               theme.transitions.create(['width', 'margin'], {
                 easing: theme.transitions.easing.sharp,

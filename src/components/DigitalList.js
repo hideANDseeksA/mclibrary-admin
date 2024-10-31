@@ -9,12 +9,32 @@ const BookList = ({ onBookUpdated }) => {
   const [editingBook, setEditingBook] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
-
+  
   const fetchBooks = async () => {
     try {
+      // Show loading alert
+      Swal.fire({
+        title: 'Loading...',
+        text: 'Fetching digital books data, please wait...',
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+  
       const response = await axios.get("https://backend-j2o4.onrender.com/api/digital_copies");
       setBooks(response.data);
+  
+      // Close loading alert
+      Swal.close();
     } catch (error) {
+      // Close loading alert and show error message
+      Swal.close();
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Error fetching digital books data!',
+      });
       console.error("Error fetching books:", error);
     }
   };
@@ -119,7 +139,7 @@ const BookList = ({ onBookUpdated }) => {
             </tr>
           ))):(
         
-            <td colSpan={10} align="center">
+            <td colSpan={6} align="center">
                 No records found.
             </td>
   
