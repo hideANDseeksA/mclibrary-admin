@@ -150,6 +150,7 @@ const BookLogs = () => {
           </Paper>
         </Box>
       </Box>
+    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
 
       {/* Search and Delete Actions */}
       <Toolbar sx={{ justifyContent: 'space-between', paddingLeft: 0, paddingRight: 0 }}>
